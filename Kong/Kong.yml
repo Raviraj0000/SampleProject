@@ -1,0 +1,19 @@
+﻿_format_version: "3.0"
+services:
+  - name: EmployeeWriteService
+    url: http://employee-write:80
+  - name: EmployeeReadService
+    url: http://employee-read:80
+  - name: UserService
+    url: http://user-service:80
+
+routes:
+  - name: employee-write-route
+    service: EmployeeWrite
+    paths: ["/EmployeeWriteService"]
+  - name: employee-read-route
+    service: EmployeeRead
+    paths: ["/EmployeeReadService"]
+  - name: user-service-route
+    service: UserService
+    paths: ["/UserService"]

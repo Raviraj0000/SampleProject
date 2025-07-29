@@ -1,0 +1,33 @@
+﻿Resources:
+  EmployeeWriteTaskDef:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: employee-write-task
+      Cpu: 512
+      Memory: 1024
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: arn:aws:iam::967371230736:role/ecsTaskExecutionRole
+      ContainerDefinitions:
+        - Name: employee-write
+          Image: 967371230736.dkr.ecr.eu-north-1.amazonaws.com/employee-write:latest
+          PortMappings:
+            - ContainerPort: 80
+          Secrets:
+            - Name: ConnectionStrings__WriteDb
+              ValueFrom: arn:aws:ecs:eu-north-1:967371230736:cluster/MicroServices-Cluster:secret:employee-write-db
+
+  EmployeeWriteService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: microservices-cluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: EmployeeWriteTaskDef
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - subnet-abc
+          SecurityGroups:
+            - sg-xyz
