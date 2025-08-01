@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password | docker login --username AWS --password-stdin 967371230736.dkr.ecr.eu-north-1.amazonaws.com/employee-write
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t employee-write .
+      - docker tag employee-write:latest 967371230736.dkr.ecr.eu-north-1.amazonaws.com/employee-write/employee-write:latest
+  post_build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push 967371230736.dkr.ecr.eu-north-1.amazonaws.com/employee-write/employee-write:latest
+
+artifacts:
+  files:
+    - '**/*'

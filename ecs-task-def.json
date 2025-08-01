@@ -1,0 +1,43 @@
+{
+  "family": "kong-gateway-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [ "EC2" ],
+  "containerDefinitions": [
+    {
+      "name": "kong",
+      "image": "kong:3.6",
+      "portMappings": [
+        { "containerPort": 8000 },
+        { "containerPort": 8001 }
+      ],
+      "environment": [
+        {
+          "name": "KONG_DATABASE",
+          "value": "off"
+        },
+        {
+          "name": "KONG_DECLARATIVE_CONFIG",
+          "value": "/kong/kong-config.yml"
+        },
+        {
+          "name": "KONG_ADMIN_LISTEN",
+          "value": "0.0.0.0:8001"
+        }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "kong-config-vol",
+          "containerPath": "/kong"
+        }
+      ]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "kong-config-vol",
+      "host": {
+        "sourcePath": "/ecs/kong-config"
+      }
+    }
+  ]
+}

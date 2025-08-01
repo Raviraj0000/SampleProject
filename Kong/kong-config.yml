@@ -1,0 +1,22 @@
+_format_version: "3.0"
+services:
+  - name: employee-read
+    url: http://employee-read.internal:5000
+    routes:
+      - name: employee-read-route
+        paths:
+          - /employee/read
+
+  - name: employee-write
+    url: http://employee-write.internal:5000
+    routes:
+      - name: employee-write-route
+        paths:
+          - /employee/write
+
+  - name: user-service
+    url: http://user-service.internal:5000
+    routes:
+      - name: user-route
+        paths:
+          - /user

@@ -1,0 +1,6 @@
+[
+  {
+    "name": "employee-write",
+    "imageUri": "967371230736.dkr.ecr.eu-north-1.amazonaws.com/employee-write/employee-write:latest"
+  }
+]
