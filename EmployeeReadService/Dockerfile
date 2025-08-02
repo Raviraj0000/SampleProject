@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["/EmployeeReadService.csproj", "EmployeeReadService/"]
-RUN dotnet restore "EmployeeReadService/EmployeeReadService.csproj"
+RUN dotnet restore "/EmployeeReadService.csproj"
 COPY . .
 WORKDIR "/src/EmployeeReadService"
 RUN dotnet publish -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
