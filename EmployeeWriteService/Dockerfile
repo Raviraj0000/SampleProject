@@ -1,4 +1,6 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+
+# This stage is used to build the service project
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS build
 WORKDIR /src
 
 # Copy only the .csproj first
