@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-windowsservercore-ltsc2022 AS build
 WORKDIR /src
 
 COPY EmployeeWriteService/EmployeeWriteService.csproj ./EmployeeWriteService/
