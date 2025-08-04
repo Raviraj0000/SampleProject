@@ -1,17 +1,14 @@
-
-# This stage is used to build the service project
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS build
-ARG BUILD_CONFIGURATION=Release
+FROM mcr.microsoft.com/dotnet/sdk:9.0-windowsservercore-ltsc2022 AS build
 WORKDIR /src
-COPY ["UserService.csproj", "UserService/"]
-RUN dotnet restore "UserService.csproj"
-COPY . .
-WORKDIR "/src/UserService"
-RUN dotnet publish -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
+COPY UserService/UserService.csproj ./UserService/
+RUN dotnet restore ./UserService/UserService.csproj
+
+COPY UserService/ ./UserService/
+WORKDIR /src/UserService
+RUN dotnet build -c Release -o /app
+
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
-EXPOSE 8080
+COPY --from=build /app .
 ENTRYPOINT ["dotnet", "UserService.dll"]
