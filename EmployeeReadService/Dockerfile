@@ -1,16 +1,14 @@
-# Build stage
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS build
-ARG BUILD_CONFIGURATION=Release
+FROM mcr.microsoft.com/dotnet/sdk:9.0-windowsservercore-ltsc2022 AS build
 WORKDIR /src
-COPY ["/EmployeeReadService.csproj", "EmployeeReadService/"]
-RUN dotnet restore "EmployeeReadService.csproj"
-COPY . .
-WORKDIR "/src/EmployeeReadService"
-RUN dotnet publish -c %BUILD_CONFIGURATION% -o /app/publish /p:UseAppHost=false
 
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022 AS final
+COPY EmployeeReadService/EmployeeReadService.csproj ./EmployeeReadService/
+RUN dotnet restore ./EmployeeReadService/EmployeeReadService.csproj
+
+COPY EmployeeReadService/ ./EmployeeReadService/
+WORKDIR /src/EmployeeReadService
+RUN dotnet build -c Release -o /app
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS final
 WORKDIR /app
-COPY --from=build /app/publish .
-EXPOSE 8080
+COPY --from=build /app .
 ENTRYPOINT ["dotnet", "EmployeeReadService.dll"]
