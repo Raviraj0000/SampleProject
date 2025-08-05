@@ -8,7 +8,7 @@ COPY EmployeeReadService/ ./EmployeeReadService/
 WORKDIR /src/EmployeeReadService
 RUN dotnet build -c Release -o /app
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-windowsservercore-ltsc2022 AS final
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "EmployeeReadService.dll"]
