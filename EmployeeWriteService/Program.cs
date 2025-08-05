@@ -6,6 +6,7 @@ using EmployeeWriteService.Interfaces;
 using EmployeeWriteService.Logger;
 using EmployeeWriteService.Persistence;
 using EmployeeWriteService.Services;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
@@ -43,8 +44,8 @@ namespace EmployeeWriteService
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            //builder.Services.AddDbContext<WriteDbContext>(options =>
-    //options.UseNpgsql(builder.Configuration.GetConnectionString("WriteDb")));
+            builder.Services.AddDbContext<WriteDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("WriteDb")));
 
             builder.Services.AddAWSService<IAmazonS3>();
             builder.Services.Configure<AWSOptions>(builder.Configuration.GetSection("AWS"));

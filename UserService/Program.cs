@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using UserService.Persistence;
+
 namespace UserService
 {
     public class Program
@@ -12,6 +15,9 @@ namespace UserService
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            builder.Services.AddDbContext<UserDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("UserDb")));
 
             var app = builder.Build();
 

@@ -7,6 +7,7 @@ using Serilog.Formatting.Json;
 using Serilog.Sinks.AwsCloudWatch;
 using EmployeeReadService.Interfaces;
 using EmployeeReadService.Logger;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace EmployeeReadService
@@ -40,8 +41,8 @@ namespace EmployeeReadService
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            //builder.Services.AddDbContext<ReadDbContext>(options =>
-    //options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDb")));
+            builder.Services.AddDbContext<ReadDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDb")));
 
             builder.Services.AddSingleton(typeof(IAppLogger<>), typeof(SerilogLogger<>));
 
