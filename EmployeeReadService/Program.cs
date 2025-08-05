@@ -5,13 +5,10 @@ using EmployeeReadService.Logger;
 using EmployeeReadService.Persistent;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.AwsCloudWatch;
-using System;
 using System.Reflection;
 
 
@@ -53,7 +50,8 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
     options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDb")));
 
             builder.Services.AddSingleton(typeof(IAppLogger<>), typeof(SerilogLogger<>));
-
+            builder.Services.AddEndpointsApiExplorer();                        
+            
             var config = builder.Configuration;
             var awsOptions = config.GetAWSOptions();
             builder.Services.AddDefaultAWSOptions(awsOptions);
@@ -67,14 +65,15 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
             //}
 
             app.UseRouting();
-            app.MapGet("/", () => "Employee Read Service is running");           
+            app.MapGet("/", () => "Employee Read Service is running");
+            app.MapGet("/test", () => "Test route OK");
 
             //app.UseHttpsRedirection();
 
             app.UseAuthorization();
          
             app.MapControllers();
-
+            app.UseSwagger();            
             app.Run();
         }
     }
