@@ -67,14 +67,11 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
             //}
 
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.MapGet("/", () => "Employee Read Service is running");           
 
             //app.UseHttpsRedirection();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
          
             app.MapControllers();
 
