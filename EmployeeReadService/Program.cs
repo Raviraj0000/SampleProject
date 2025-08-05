@@ -36,10 +36,10 @@ namespace EmployeeReadService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddAuthorization();
+            //builder.Services.AddAuthorization();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            //builder.Services.AddOpenApi();
 
             builder.Services.AddDbContext<ReadDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDb")));
@@ -58,8 +58,11 @@ namespace EmployeeReadService
             //    app.MapOpenApi();
             //}
 
-            app.UseRouting();            
-
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             //app.UseHttpsRedirection();
 
