@@ -46,6 +46,10 @@ namespace EmployeeReadService
 
             builder.Services.AddSingleton(typeof(IAppLogger<>), typeof(SerilogLogger<>));
 
+            var config = builder.Configuration;
+            var awsOptions = config.GetAWSOptions();
+            builder.Services.AddDefaultAWSOptions(awsOptions);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
