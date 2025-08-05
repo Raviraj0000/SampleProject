@@ -1,13 +1,18 @@
 
 using Amazon.CloudWatchLogs;
+using EmployeeReadService.Interfaces;
+using EmployeeReadService.Logger;
 using EmployeeReadService.Persistent;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.AwsCloudWatch;
-using EmployeeReadService.Interfaces;
-using EmployeeReadService.Logger;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
 
 
 namespace EmployeeReadService
@@ -33,10 +38,10 @@ namespace EmployeeReadService
                 .WriteTo.AmazonCloudWatch(options, cloudWatchClient)
                 .CreateLogger();
 
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder(args);                       
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             builder.Services.AddControllers();
-            
-            
+
 
             // Add services to the container.
             //builder.Services.AddAuthorization();
