@@ -53,14 +53,17 @@ namespace EmployeeReadService
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.MapOpenApi();
+            //}
 
-            app.UseHttpsRedirection();
+            app.UseRouting();            
 
-            app.UseAuthorization();
+
+            //app.UseHttpsRedirection();
+
+            //app.UseAuthorization();
 
             app.Run();
         }
