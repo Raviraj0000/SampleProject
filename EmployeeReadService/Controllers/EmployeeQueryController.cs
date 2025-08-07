@@ -12,7 +12,7 @@ namespace EmployeeReadService.Controllers
         public EmployeeQueryController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(int id)
             => Ok(await _mediator.Send(new GetEmployeeQuery { Id = id }));
     }
 }

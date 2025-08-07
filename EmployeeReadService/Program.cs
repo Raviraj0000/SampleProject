@@ -50,7 +50,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
     options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDb")));
 
             builder.Services.AddSingleton(typeof(IAppLogger<>), typeof(SerilogLogger<>));
-            builder.Services.AddEndpointsApiExplorer();                        
+            //builder.Services.AddEndpointsApiExplorer();                        
             
             var config = builder.Configuration;
             var awsOptions = config.GetAWSOptions();
@@ -73,7 +73,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
             app.UseAuthorization();
          
             app.MapControllers();
-            app.UseSwagger();            
+            //app.UseSwagger();            
             app.Run();
         }
     }

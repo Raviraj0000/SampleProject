@@ -5,6 +5,6 @@ namespace EmployeeReadService.Queries
 {
     public class GetEmployeeQuery : IRequest<EmployeeDTO>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }
